@@ -36,3 +36,36 @@
     transform: rotate(360deg);
   }
 }
+
+input[type='button'] {
+  background-color: #2584ddff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type='button']:disabled {
+  background-color: #ccd0d3;
+  color: #666;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+input[type='button']:hover {
+  background-color: #1a6fbb;
+}
+
+select {
+  background-color: #2584ddff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+select:hover {
+  background-color: #5584a8;
+}
