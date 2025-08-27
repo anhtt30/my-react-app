@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { useEffect, useState} from 'react';
+import ScrollToTopButton from './components/ScrollToTopButton';
 
 function App() {
   const [questions, setQuestions] = useState([]);
@@ -82,6 +83,7 @@ function App() {
   return (
     <div className="App">
       <div>
+        <ScrollToTopButton />
         <div style={{ position: 'sticky' , top: '0px', backgroundColor: '#95acc2ff', padding: '10px', zIndex: '1' }}>
           <h1 style={{ marginTop: '0px', marginBottom: '10px', color: 'white'}}>Welcome to Exam question</h1>
           <input type='text' name="search-text" style={{ float: 'left'}} />

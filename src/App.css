@@ -76,3 +76,22 @@ select {
 select:hover {
   background-color: #5584a8;
 }
+
+#scrollTopBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: none; /* hidden by default */
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#scrollTopBtn:hover {
+    background-color: #0056b3;
+}
