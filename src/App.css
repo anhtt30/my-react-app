@@ -57,6 +57,13 @@ input[type='button']:hover {
   background-color: #1a6fbb;
 }
 
+input[type='text'] {
+  border-radius: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  height: 20px;
+}
+
 select {
   background-color: #2584ddff;
   color: white;

@@ -6,6 +6,7 @@ function App() {
   const [questions, setQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // use state
   const [totalPage, setTotalPage] = useState(1);
+  const [searchContent, setSearchContent] = useState();
 
   const handleSuggestedClick = (event) => {
     const td = event.target.closest("td"); // get closest <td>
@@ -25,41 +26,48 @@ function App() {
     event.target.value = votingDiv.style.display === "block" ? "Hide Voting Answer" : "Show Voting Answer";
   };
 
-  const handlePreviousPageClick = (event) => {
+  const handlePreviousPageClick = () => {
     const newPage = currentPage - 1;
-    setCurrentPage(newPage); // update state
-    fetch(`/api/questions?page=${newPage}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestions(data.data);
-        setTotalPage(data.totalPage);
-      })
-      .catch((error) => console.error('Error fetching questions:', error));
+    pageSelelect(searchContent, newPage);
   };
 
-  const handleNextPageClick = (event) => {
+  const handleNextPageClick = () => {
     const newPage = currentPage + 1;
-    setCurrentPage(newPage); // update state
-    fetch(`/api/questions?page=${newPage}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestions(data.data);
-        setTotalPage(data.totalPage);
-      })
-      .catch((error) => console.error('Error fetching questions:', error));
+    pageSelelect(searchContent, newPage);
   };
 
   const handlePageSelect = (event) => {
     const selectedPage = Number(event.target.value);
+    pageSelelect(searchContent, selectedPage);
+  };
+
+  const pageSelelect = (searchStr, selectedPage) => {
+    setSearchContent(searchStr);
     setCurrentPage(selectedPage);
-    fetch(`/api/questions?page=${selectedPage}`)
+    if(searchStr == null || searchStr === ''){
+      fetch(`/api/questions?page=${selectedPage}`)
       .then((response) => response.json())
       .then((data) => {
         setQuestions(data.data);
         setTotalPage(data.totalPage);
       })
       .catch((error) => console.error('Error fetching questions:', error));
-  };
+    }
+    else{
+      fetch(`/api/questions?page=${selectedPage}&searchParam=${encodeURIComponent(searchStr)}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setQuestions(data.data);
+          setTotalPage(data.totalPage);
+        })
+        .catch((error) => console.error('Error fetching questions:', error));
+    }
+  }
+
+  const handleSearchButton = (event) => {
+    const searchStr = event.target.previousSibling.value;
+    pageSelelect(searchStr, 1);
+  }
 
   useEffect(() => {
     fetch(`/api/questions?page=1`)
@@ -76,6 +84,8 @@ function App() {
       <div>
         <div style={{ position: 'sticky' , top: '0px', backgroundColor: '#95acc2ff', padding: '10px', zIndex: '1' }}>
           <h1 style={{ marginTop: '0px', marginBottom: '10px', color: 'white'}}>Welcome to Exam question</h1>
+          <input type='text' name="search-text" style={{ float: 'left'}} />
+          <input type='button' value="search" className='search' onClick={handleSearchButton} style={{ float: 'left'}}/>
           <input type='button' value='previous page' disabled={currentPage === 1} onClick={handlePreviousPageClick} style={{ marginRight: '10px' }}/>
           <input type='button' value='next page' disabled={questions.length < 20} onClick={handleNextPageClick} style={{ marginRight: '10px' }}/>
           <select onChange={handlePageSelect}>
